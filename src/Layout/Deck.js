@@ -39,12 +39,16 @@ function Deck() {
         }
     }
 
-    function addCardHandler(deckId) {
-        navigate(`/decks/${deckId}/cards/new`);
+    function editDeckHandler(deckId) {
+        navigate(`/decks/${deckId}/edit`);
     }
 
     function studyHandler(deckId) {
         navigate(`/decks/${deckId}/study`);
+    }
+
+    function addCardHandler(deckId) {
+        navigate(`/decks/${deckId}/cards/new`);
     }
 
     if (loading) {
@@ -62,7 +66,7 @@ function Deck() {
             <h2>{deck.name}</h2>
             <p>{deck.description}</p>
             <br/>
-            <button>Edit</button>
+            <button onClick={() => editDeckHandler(deck.id)}>Edit</button>
             <button onClick={() => studyHandler(deck.id)}>Study</button>
             <button onClick={() => addCardHandler(deck.id)}>Add Cards</button>
             <button>Delete</button>
