@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { listDecks, deleteDeck } from '../utils/api/index';
+import {useNavigate, useParams} from "react-router-dom";
+import {deleteDeck, readDeck} from '../utils/api/index';
 
 function Deck() {
     const navigate = useNavigate();
-    const [decks, setDecks] = useState([]);
+    const params = useParams();
+
+    const [deck, setDeck] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchDecks() {
+        async function fetchDeck() {
             try {
                 const signal = new AbortController().signal;
-                const data = await listDecks(signal);
-                setDecks(data);
+                const data = await readDeck(params.deckId, signal);
+                setDeck(data);
             } catch (error) {
-                console.error('Error fetching decks:', error);
+                console.error('Error fetching deck:', error);
             } finally {
                 setLoading(false);
             }
         }
 
-        fetchDecks();
-    }, []); // Empty dependency array means this effect runs once after the initial render
+        fetchDeck();
+    }, [params.deckId]);
 
-
-    function createDeck() {
-        navigate("/deck/new");
-    }
-
-    function studyDeck(deckId) {
-        navigate(`/decks/${deckId}/study`);
-    }
 
     async function handleDelete(deckId) {
         if (window.confirm("Are you sure you want to delete this deck?")) {
@@ -38,39 +32,54 @@ function Deck() {
                 const signal = new AbortController().signal;
                 await deleteDeck(deckId, signal);
                 // Update the state to remove the deleted deck
-                setDecks((currentDecks) => currentDecks.filter(deck => deck.id !== deckId));
+                setDeck((currentDecks) => currentDecks.filter(deck => deck.id !== deckId));
             } catch (error) {
                 console.error('Error deleting deck:', error);
             }
         }
     }
 
+    function addCardHandler(deckId) {
+        navigate(`/decks/${deckId}/cards/new`);
+    }
+
+    function studyHandler(deckId) {
+        navigate(`/decks/${deckId}/study`);
+    }
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
+    if (!deck) {
+        return <div>Deck does not exist</div>;
+    }
+
     return (
         <>
-            <div>
-                <button onClick={createDeck}>Create Deck</button>
-            </div>
-            {/* Display decks if there is data */}
-            {decks.length > 0 ? (
-                <div>
-                    {decks.map((deck) => (
-                        <div key={deck.id}>
-                            <h2>{deck.name}</h2>
-                            <p>{deck.description}</p>
-                            <br/>
-                            <button>View</button>
-                            <button onClick={() => studyDeck(deck.id)}>Study</button>
-                            <button onClick={() => handleDelete(deck.id)}>Delete</button>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div>No decks available</div>
-            )}
+        {deck &&
+            <>
+            <h2>{deck.name}</h2>
+            <p>{deck.description}</p>
+            <br/>
+            <button>Edit</button>
+            <button onClick={() => studyHandler(deck.id)}>Study</button>
+            <button onClick={() => addCardHandler(deck.id)}>Add Cards</button>
+            <button>Delete</button>
+            <p></p>
+            <h1>Cards</h1>
+            {
+                deck.cards.map((card) => (
+                    <React.Fragment key={card.id}>
+                    <p>{card.front}</p>
+                    <p>{card.back}</p>
+                    <button>Edit</button>
+                    <button>Delete</button>
+                    </React.Fragment>
+                ))
+            }
+            </>
+        }
         </>
     );
 }

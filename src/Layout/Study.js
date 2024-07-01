@@ -45,12 +45,12 @@ function Study() {
         }
     }
 
-    if (loading) {
-        return <div>Loading...</div>;
+    function addCardHandler(deckId) {
+        navigate(`/decks/${deckId}/cards/new`);
     }
 
-    if (!deck || !deck.cards || deck.cards.length === 0) {
-        return <div>No cards available</div>;
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
     if (deck.cards.length <= 2) {
@@ -60,20 +60,19 @@ function Study() {
                 <h2>Not enough cards</h2>
                 <p>You need at least 3 cards to study. There are {deck.cards.length} cards in the deck.</p>
                 <br/>
-                <button>Add Cards</button>
+                <button onClick={() => addCardHandler(deck.id)}>Add Cards</button>
             </div>
         );
     }
 
     const card = deck.cards[cardNum - 1];
     const cardContent = isFront ? card.front : card.back;
-
     return (
         <div className="Study">
             <h1>Study: {deck.name}</h1>
             <h2>Card {cardNum} of {deck.cards.length}</h2>
             <p>{cardContent}</p>
-            <button onClick={flipHandler}>Flip</button>
+            <button onClick={() => setIsFront(!isFront)}>Flip</button>
             {!isFront && <button onClick={handleNext}>Next</button>}
         </div>
     );
