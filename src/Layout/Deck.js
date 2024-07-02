@@ -94,12 +94,12 @@ function Deck() {
                 </div>
                 <p></p>
                 <h1>Cards</h1>
-                {
+                {cards.length > 0 ? (
                     cards.map((card) => (
                         <div className="card">
                             <div key={card.id} className="card-body" style={{
                                 display: 'flex',
-                                justifyContent: 'space-between', alignItems: 'center', padding: '10px', border: '1px solid #ccc', marginBottom: '10px' }}>
+                                justifyContent: 'space-between', alignItems: 'center', padding: '10px', marginBottom: '10px' }}>
                             <div>
                                 <p>{card.front}</p>
                             </div>
@@ -113,6 +113,9 @@ function Deck() {
                         </div>
                     </div>
                 ))
+                ): (
+                    <div>No cards</div>
+                    )
             }
             </>
         }

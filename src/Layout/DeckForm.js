@@ -62,9 +62,9 @@ function DeckForm() {
         <form onSubmit={handleSubmit}>
             {
                 params.deckId ? (
-                    <h1>Edit Deck</h1>
+                    <h2>Edit Deck</h2>
                 ) : (
-                    <h1>Create Deck</h1>
+                    <h2>Create Deck</h2>
                 )
             }
             <div className="mb-3">
@@ -89,14 +89,7 @@ function DeckForm() {
                     onChange={handleChange}
                     value={formData.description}
                 />
-                <br/>
-                {
-                    params.deckId ? (
-                        <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => cancelHandler(params.deckId)}>Cancel</button>
-                    ) : (
-                        <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => cancelHandler(params.deckId)}>Cancel</button>
-                    )
-                }
+                <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => cancelHandler(params.deckId)}>Cancel</button>
                 <button className="btn btn-primary" style={{margin: '5px'}}>Submit</button>
             </div>
         </form>

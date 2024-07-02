@@ -52,11 +52,11 @@ function Study() {
     if (deck.cards.length <= 2) {
         return (
             <div className="container">
-                <p>{deck.name}</p>
-                <p>Not enough cards</p>
+                <h2>{deck.name}</h2>
+                <h5>Not enough cards.</h5>
                 <p>You need at least 3 cards to study. There are {deck.cards.length} cards in the deck.</p>
                 <br/>
-                <button onClick={() => addCardHandler(deck.id)}>Add Cards</button>
+                <button className="btn btn-primary" onClick={() => addCardHandler(deck.id)}>Add Cards</button>
             </div>
         );
     }

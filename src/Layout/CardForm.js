@@ -67,44 +67,48 @@ function CardForm() {
     }
 
     return (
-    <div>
+    <div className="container">
         <form onSubmit={handleSubmit}>
             {
                 !params.cardId ? (
                     <>
-                        <p>{deck.name}</p>
-                        <p>Add Card</p>
+                        <h2>{deck.name}</h2>
+                        <h5>Add Card</h5>
                     </>
                 ) : (
                     <>
-                        <p>{deck.name}</p>
-                        <p>Edit Card</p>
+                        <h2>{deck.name}</h2>
+                        <h5>Edit Card</h5>
                     </>
                 )
             }
-            <p>Front</p>
-            <textarea
-                id="front"
-                name="front"
-                placeholder={"Front side of card"}
-                onChange={handleChange}
-                value={formData.front}
-            />
-            <br/>
-            <p>Back</p>
-            <textarea
-                id="back"
-                name="back"
-                placeholder={"Back side of card"}
-                onChange={handleChange}
-                value={formData.back}
-            />
-            <br/>
-            <button onClick={() => backToDeckView(deck.id)}>Done</button>
-            <button>Save</button>
+            <div className="mb-3">
+                <label className="form-label">Front</label>
+                <textarea
+                    className="form-control"
+                    id="front"
+                    name="front"
+                    placeholder={"Front side of card"}
+                    onChange={handleChange}
+                    value={formData.front}
+                />
+            </div>
+            <div className="mb-3">
+                <label className="form-label">Back</label>
+                <textarea
+                    className="form-control"
+                    id="back"
+                    name="back"
+                    placeholder={"Back side of card"}
+                    onChange={handleChange}
+                    value={formData.back}
+                />
+                <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => backToDeckView(deck.id)}>Cancel</button>
+                <button className="btn btn-primary" style={{margin: '5px'}}>Submit</button>
+            </div>
         </form>
     </div>
-    );
+);
 }
 
 export default CardForm;
