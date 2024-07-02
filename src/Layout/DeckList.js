@@ -49,13 +49,11 @@ function DeckList() {
     }
 
     return (
+
         <div className="container">
             <div>
                 <button className="btn btn-secondary" onClick={createDeck}>Create Deck</button>
             </div>
-            <br/>
-            {/* Display decks if there is data */}
-
             {decks.length > 0 ? (
                 <div>
                     {decks.map((deck) => (
