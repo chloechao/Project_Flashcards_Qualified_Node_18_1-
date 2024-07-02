@@ -69,31 +69,54 @@ function Deck() {
     }
 
     return (
-        <>
+        <div className="container">
         {deck &&
             <>
-            <p>{deck.name}</p>
+            <h2>{deck.name}</h2>
             <p>{deck.description}</p>
-            <br/>
-            <button onClick={() => editDeckHandler(deck.id)}>Edit</button>
-            <button onClick={() => studyHandler(deck.id)}>Study</button>
-            <button onClick={() => addCardHandler(deck.id)}>Add Cards</button>
-            <button onClick={() => deleteDeckHandler(deck.id)}>Delete</button>
-            <p></p>
-            <h1>Cards</h1>
-            {
-                cards.map((card) => (
-                    <React.Fragment key={card.id}>
-                    <p>{card.front}</p>
-                    <p>{card.back}</p>
-                    <button onClick={() => editCardHandler(deck.id, card.id)}>Edit</button>
-                    <button onClick={() => deleteCardHandler(card.id)}>Delete</button>
-                    </React.Fragment>
+                <div>
+                    <div>
+                        <button onClick={() => editDeckHandler(deck.id)} className="btn btn-secondary"
+                                style={{margin: '5px'}}>Edit
+                        </button>
+                        <button onClick={() => studyHandler(deck.id)} className="btn btn-primary"
+                                style={{margin: '5px'}}>Study
+                        </button>
+                        <button onClick={() => addCardHandler(deck.id)} className="btn btn-primary"
+                                style={{margin: '5px'}}>Add Cards
+                        </button>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button onClick={() => deleteDeckHandler(deck.id)} className="btn btn-danger"
+                                style={{margin: '5px', display: 'flex', justifyContent: 'flex-end'}}>Delete
+                        </button>
+                    </div>
+                </div>
+                <p></p>
+                <h1>Cards</h1>
+                {
+                    cards.map((card) => (
+                        <div className="card">
+                            <div key={card.id} className="card-body" style={{
+                                display: 'flex',
+                                justifyContent: 'space-between', alignItems: 'center', padding: '10px', border: '1px solid #ccc', marginBottom: '10px' }}>
+                            <div>
+                                <p>{card.front}</p>
+                            </div>
+                            <div>
+                                <p>{card.back}</p>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <button onClick={() => editCardHandler(deck.id, card.id)} className="btn btn-secondary" style={{ margin: '5px' }}>Edit</button>
+                                    <button onClick={() => deleteCardHandler(card.id)} className="btn btn-danger" style={{ margin: '5px' }}>Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 ))
             }
             </>
         }
-        </>
+        </div>
     );
 }
 

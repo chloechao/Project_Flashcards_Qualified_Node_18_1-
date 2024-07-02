@@ -58,7 +58,7 @@ function DeckForm() {
     }
 
     return (
-    <div>
+    <div className="container">
         <form onSubmit={handleSubmit}>
             {
                 params.deckId ? (
@@ -67,36 +67,41 @@ function DeckForm() {
                     <h1>Create Deck</h1>
                 )
             }
-            <p>Name</p>
-            <input
-                id="name"
-                type="text"
-                name="name"
-                placeholder={"Deck Name"}
-                onChange={handleChange}
-                value={formData.name}
-            />
-            <br/>
-            <p>Description</p>
-            <textarea
-                id="description"
-                name="description"
-                placeholder={"Brief description of the deck"}
-                onChange={handleChange}
-                value={formData.description}
-            />
-            <br/>
-            {
-                params.deckId ? (
-                    <button onClick={() => cancelHandler(params.deckId)}>Cancel</button>
-                ) : (
-                    <button onClick={cancelHandler}>Cancel</button>
-                )
-            }
-            <button>Submit</button>
+            <div className="mb-3">
+                <label className="form-label">Name</label>
+                <input
+                    className="form-control"
+                    id="name"
+                    type="text"
+                    name="name"
+                    placeholder={"Deck Name"}
+                    onChange={handleChange}
+                    value={formData.name}
+                />
+            </div>
+            <div className="mb-3">
+                <label className="form-label">Description</label>
+                <textarea
+                    className="form-control"
+                    id="description"
+                    name="description"
+                    placeholder={"Brief description of the deck"}
+                    onChange={handleChange}
+                    value={formData.description}
+                />
+                <br/>
+                {
+                    params.deckId ? (
+                        <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => cancelHandler(params.deckId)}>Cancel</button>
+                    ) : (
+                        <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => cancelHandler(params.deckId)}>Cancel</button>
+                    )
+                }
+                <button className="btn btn-primary" style={{margin: '5px'}}>Submit</button>
+            </div>
         </form>
     </div>
-    );
+);
 }
 
 export default DeckForm;

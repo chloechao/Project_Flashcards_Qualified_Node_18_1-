@@ -51,7 +51,7 @@ function Study() {
 
     if (deck.cards.length <= 2) {
         return (
-            <div className="Study">
+            <div className="container">
                 <p>{deck.name}</p>
                 <p>Not enough cards</p>
                 <p>You need at least 3 cards to study. There are {deck.cards.length} cards in the deck.</p>
@@ -64,12 +64,16 @@ function Study() {
     const card = deck.cards[cardNum - 1];
     const cardContent = isFront ? card.front : card.back;
     return (
-        <div className="Study">
-            <p>{deck.name}</p>
-            <p>Card {cardNum} of {deck.cards.length}</p>
-            <p>{cardContent}</p>
-            <button onClick={() => setIsFront(!isFront)}>Flip</button>
-            {!isFront && <button onClick={handleNext}>Next</button>}
+        <div className="container">
+            <h2 className="card-title">{deck.name}</h2>
+            <div className="card">
+                <div className="card-body">
+                    <h5>Card {cardNum} of {deck.cards.length}</h5>
+                    <p>{cardContent}</p>
+                    <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => setIsFront(!isFront)}>Flip</button>
+                    {!isFront && <button className="btn btn-primary" style={{margin: '5px'}} onClick={handleNext}>Next</button>}
+                </div>
+            </div>
         </div>
     );
 }
