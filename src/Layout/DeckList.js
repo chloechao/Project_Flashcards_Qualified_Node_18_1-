@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { listDecks, deleteDeck } from '../utils/api/index';
+import { listDecks } from '../utils/api/index';
+import { deleteDeckCall }  from '../utils/apiCalls'
 
 function DeckList() {
     const navigate = useNavigate();
@@ -23,9 +24,15 @@ function DeckList() {
         fetchDecks();
     }, []); // Empty dependency array means this effect runs once after the initial render
 
+    async function deleteHandler(deckId) {
+        const response = await deleteDeckCall(deckId);
+        if(response !== undefined) {
+            setDecks((currentDecks) => currentDecks.filter(deck => deck.id !== deckId));
+        }
+    }
 
     function createDeck() {
-        navigate("/deck/new");
+        navigate("/decks/new");
     }
 
     function studyDeck(deckId) {
@@ -34,19 +41,6 @@ function DeckList() {
 
     function viewDeck(deckId) {
         navigate(`/decks/${deckId}`);
-    }
-
-    async function handleDelete(deckId) {
-        if (window.confirm("Are you sure you want to delete this deck?")) {
-            try {
-                const signal = new AbortController().signal;
-                await deleteDeck(deckId, signal);
-                // Update the state to remove the deleted deck
-                setDecks((currentDecks) => currentDecks.filter(deck => deck.id !== deckId));
-            } catch (error) {
-                console.error('Error deleting deck:', error);
-            }
-        }
     }
 
     if (loading) {
@@ -68,7 +62,7 @@ function DeckList() {
                             <br/>
                             <button onClick={() => viewDeck(deck.id)}>View</button>
                             <button onClick={() => studyDeck(deck.id)}>Study</button>
-                            <button onClick={() => handleDelete(deck.id)}>Delete</button>
+                            <button onClick={() => deleteHandler(deck.id)}>Delete</button>
                         </div>
                     ))}
                 </div>

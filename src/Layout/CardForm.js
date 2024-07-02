@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {createCard, readDeck} from "../utils/api";
+import {createCard, readDeck, updateCard} from "../utils/api";
 
 function CardForm() {
     const params = useParams();
@@ -9,6 +9,8 @@ function CardForm() {
     const [loading, setLoading] = useState(true);
 
     const initialFormState = {
+        id: 0,
+        deckId: 0,
         front: "",
         back: ""
     };
@@ -19,7 +21,11 @@ function CardForm() {
             try {
                 const signal = new AbortController().signal;
                 const data = await readDeck(params.deckId, signal);
+                const theCard = data.cards.find(card => card.id === parseInt(params.cardId))
                 setDeck(data);
+                if(theCard) {
+                    setFormData({id: theCard.id, deckId:theCard.deckId, front: theCard.front, back: theCard.back});
+                }
             } catch (error) {
                 console.error('Error fetching deck:', error);
             } finally {
@@ -28,7 +34,7 @@ function CardForm() {
         }
 
         fetchDeck();
-    }, [params.deckId]);
+    }, [params.deckId, params.cardId]);
 
     const handleChange = ({ target }) => {
         setFormData({
@@ -37,22 +43,24 @@ function CardForm() {
         });
     };
 
+    function backToDeckView(deckId) {
+        navigate(`/decks/${deckId}`);
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // call API to create a card of the deck
             const signal = new AbortController().signal;
-            await createCard(params.deckId, formData, signal);
+            //await createCard(params.deckId, formData, signal);
+            if(!formData.id) { delete initialFormState.id; }
+            const response = (!formData.id) ? await createCard(params.deckId, formData, signal) : await updateCard(formData, signal);
+            backToDeckView(response.deckId)
         } catch (error) {
             console.error('Error submitting card:', error);
         } finally {
             setFormData(initialFormState); // Reset the form after submission
         }
     };
-
-    function doneHandler(deckId) {
-        navigate(`/decks/${deckId}`);
-    }
 
     if(loading) {
         return(<p>Loading</p>)
@@ -61,7 +69,13 @@ function CardForm() {
     return (
     <div>
         <form onSubmit={handleSubmit}>
-            <h1>{deck.name}: Add Card</h1>
+            {
+                !params.cardId ? (
+                    <h1>{deck.name}: Add Card</h1>
+                ) : (
+                    <h1>{deck.name}: Edit Card</h1>
+                )
+            }
             <p>Front</p>
             <textarea
                 id="front"
@@ -80,7 +94,7 @@ function CardForm() {
                 value={formData.back}
             />
             <br/>
-            <button onClick={() => doneHandler(deck.id)}>Done</button>
+            <button onClick={() => backToDeckView(deck.id)}>Done</button>
             <button>Save</button>
         </form>
     </div>

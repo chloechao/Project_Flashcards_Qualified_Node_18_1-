@@ -195,6 +195,7 @@ export async function readCard(cardId, signal) {
  */
 export async function updateCard(updatedCard, signal) {
   const url = `${API_BASE_URL}/cards/${updatedCard.id}`;
+  console.log(url)
   const options = {
     method: "PUT",
     headers,

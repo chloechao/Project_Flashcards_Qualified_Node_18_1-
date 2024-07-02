@@ -12,23 +12,8 @@
     },
     {
       "name": "Lunch menu",
-      "description": "Here are options for lunch",
+      "description": "Options\n",
       "id": 3
-    },
-    {
-      "name": "Dinner menu",
-      "description": "Options for dinner",
-      "id": 4
-    },
-    {
-      "name": "Breakfast menu",
-      "description": "Options for breakfast",
-      "id": 5
-    },
-    {
-      "name": "Drink menu",
-      "description": "Options for drinks",
-      "id": 6
     }
   ],
   "cards": [
@@ -69,22 +54,22 @@
       "id": 6
     },
     {
-      "front": "Ramen",
-      "back": "Spicy",
+      "id": 7,
       "deckId": 3,
-      "id": 7
+      "front": "Tacos",
+      "back": "Mexican food"
     },
     {
+      "id": 8,
+      "deckId": 3,
       "front": "Sushi",
-      "back": "Tuna",
-      "deckId": 3,
-      "id": 8
+      "back": "Raw fish"
     },
     {
-      "front": "Kimuchi",
-      "back": "Pork",
+      "id": 9,
       "deckId": 3,
-      "id": 9
+      "front": "Fried rice",
+      "back": "Chinese"
     }
   ]
 }
