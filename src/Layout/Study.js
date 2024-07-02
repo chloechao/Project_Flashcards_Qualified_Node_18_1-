@@ -30,6 +30,7 @@ function Study() {
     function handleNext() {
         if(cardNum < deck.cards.length) {
             setCardNum(cardNum + 1)
+            setIsFront(true)
         }
         else{
             if (window.confirm("Click OK to restart or Cancel to return to the home page")) {
