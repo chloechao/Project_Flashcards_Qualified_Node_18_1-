@@ -49,29 +49,44 @@ function DeckList() {
     }
 
     return (
-        <>
+        <div className="container">
             <div>
-                <button onClick={createDeck}>Create Deck</button>
+                <button className="btn btn-secondary" onClick={createDeck}>Create Deck</button>
             </div>
+            <br/>
             {/* Display decks if there is data */}
+
             {decks.length > 0 ? (
                 <div>
                     {decks.map((deck) => (
-                        <div key={deck.id}>
-                            <h2>{deck.name}</h2>
-                            <p>{deck.cards.length} cards</p>
-                            <p>{deck.description}</p>
-                            <br/>
-                            <button onClick={() => viewDeck(deck.id)}>View</button>
-                            <button onClick={() => studyDeck(deck.id)}>Study</button>
-                            <button onClick={() => deleteHandler(deck.id)}>Delete</button>
+                        <div className="card">
+                            <div key={deck.id}  className="card-body">
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <h5 className="card-title">{deck.name}</h5>
+                                    <p>{deck.cards.length} cards</p>
+                                </div>
+                                <h6 className="card-subtitle mb-2 text-body-secondary">{deck.description}</h6>
+                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                    <div>
+                                        <button className="btn btn-secondary" style={{margin: '5px'}}
+                                                onClick={() => viewDeck(deck.id)}>View
+                                        </button>
+                                        <button className="btn btn-primary" style={{margin: '5px'}}
+                                                onClick={() => studyDeck(deck.id)}>Study
+                                        </button>
+                                    </div>
+                                    <button className="btn btn-danger"
+                                            onClick={() => deleteHandler(deck.id)}>Delete
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
             ) : (
                 <div>No decks available</div>
             )}
-        </>
+        </div>
     );
 }
 
