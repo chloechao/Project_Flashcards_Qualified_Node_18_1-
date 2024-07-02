@@ -54,22 +54,16 @@
       "id": 6
     },
     {
-      "id": 7,
-      "deckId": 3,
-      "front": "Tacos",
-      "back": "Mexican food"
-    },
-    {
-      "id": 8,
-      "deckId": 3,
-      "front": "Sushi",
-      "back": "Raw fish"
-    },
-    {
       "id": 9,
       "deckId": 3,
       "front": "Fried rice",
       "back": "Chinese"
+    },
+    {
+      "id": 10,
+      "deckId": 3,
+      "front": "Ramen",
+      "back": "Spicy"
     }
   ]
 }

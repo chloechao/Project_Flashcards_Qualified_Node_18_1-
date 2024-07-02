@@ -71,9 +71,15 @@ function CardForm() {
         <form onSubmit={handleSubmit}>
             {
                 !params.cardId ? (
-                    <h1>{deck.name}: Add Card</h1>
+                    <>
+                        <p>{deck.name}</p>
+                        <p>Add Card</p>
+                    </>
                 ) : (
-                    <h1>{deck.name}: Edit Card</h1>
+                    <>
+                        <p>{deck.name}</p>
+                        <p>Edit Card</p>
+                    </>
                 )
             }
             <p>Front</p>

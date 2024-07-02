@@ -13,6 +13,7 @@ function DeckList() {
             try {
                 const signal = new AbortController().signal;
                 const data = await listDecks(signal);
+                console.log(data)
                 setDecks(data);
             } catch (error) {
                 console.error('Error fetching decks:', error);
@@ -58,6 +59,7 @@ function DeckList() {
                     {decks.map((deck) => (
                         <div key={deck.id}>
                             <h2>{deck.name}</h2>
+                            <p>{deck.cards.length} cards</p>
                             <p>{deck.description}</p>
                             <br/>
                             <button onClick={() => viewDeck(deck.id)}>View</button>

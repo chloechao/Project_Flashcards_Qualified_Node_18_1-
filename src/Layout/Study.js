@@ -27,10 +27,6 @@ function Study() {
         fetchDeck();
     }, [params.deckId]);
 
-    function flipHandler() {
-        setIsFront(!isFront);
-    }
-
     function handleNext() {
         if(cardNum < deck.cards.length) {
             setCardNum(cardNum + 1)
@@ -56,8 +52,8 @@ function Study() {
     if (deck.cards.length <= 2) {
         return (
             <div className="Study">
-                <h1>Study: {deck.name}</h1>
-                <h2>Not enough cards</h2>
+                <p>{deck.name}</p>
+                <p>Not enough cards</p>
                 <p>You need at least 3 cards to study. There are {deck.cards.length} cards in the deck.</p>
                 <br/>
                 <button onClick={() => addCardHandler(deck.id)}>Add Cards</button>
@@ -69,8 +65,8 @@ function Study() {
     const cardContent = isFront ? card.front : card.back;
     return (
         <div className="Study">
-            <h1>Study: {deck.name}</h1>
-            <h2>Card {cardNum} of {deck.cards.length}</h2>
+            <p>{deck.name}</p>
+            <p>Card {cardNum} of {deck.cards.length}</p>
             <p>{cardContent}</p>
             <button onClick={() => setIsFront(!isFront)}>Flip</button>
             {!isFront && <button onClick={handleNext}>Next</button>}
