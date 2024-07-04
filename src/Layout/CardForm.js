@@ -51,14 +51,16 @@ function CardForm() {
         event.preventDefault();
         try {
             const signal = new AbortController().signal;
-            //await createCard(params.deckId, formData, signal);
-            if(!formData.id) { delete initialFormState.id; }
-            const response = (!formData.id) ? await createCard(params.deckId, formData, signal) : await updateCard(formData, signal);
-            backToDeckView(response.deckId)
+            if(!formData.id) {
+                delete initialFormState.id;
+                await createCard(params.deckId, formData, signal)
+                setFormData(initialFormState);
+            } else {
+                const response = await updateCard(formData, signal)
+                backToDeckView(response.deckId)
+            }
         } catch (error) {
             console.error('Error submitting card:', error);
-        } finally {
-            setFormData(initialFormState); // Reset the form after submission
         }
     };
 
@@ -103,12 +105,29 @@ function CardForm() {
                     onChange={handleChange}
                     value={formData.back}
                 />
-                <button className="btn btn-secondary" style={{margin: '5px'}} onClick={() => backToDeckView(deck.id)}>Cancel</button>
-                <button className="btn btn-primary" style={{margin: '5px'}}>Submit</button>
+                {
+                    !params.cardId ? (
+                        // buttons are Done and Save when adding a card
+                        <>
+                            <button className="btn btn-secondary" style={{margin: '5px'}}
+                                    onClick={() => backToDeckView(deck.id)}>Done
+                            </button>
+                            <button className="btn btn-primary" style={{margin: '5px'}}>Save</button>
+                        </>
+                    ) : (
+                        // buttons are Cancel and Submit when editing the card
+                        <>
+                            <button className="btn btn-secondary" style={{margin: '5px'}}
+                                    onClick={() => backToDeckView(deck.id)}>Cancel
+                            </button>
+                            <button className="btn btn-primary" style={{margin: '5px'}}>Submit</button>
+                        </>
+                    )
+                }
             </div>
         </form>
     </div>
-);
+    );
 }
 
 export default CardForm;
